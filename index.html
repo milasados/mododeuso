@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Modo de uso · MIL ASADOS</title>
+<meta name="description" content="Instrucciones de uso de los productos MIL ASADOS.">
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#0c0b0a">
+
+<link rel="icon" href="/assets/img/favicon.ico" sizes="any">
+<link rel="icon" href="/assets/img/favicon-512.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="/assets/img/favicon-512.png">
+
+<link rel="preload" href="/assets/fonts/barlow-condensed-700.woff2" as="font" type="font/woff2" crossorigin>
+
+<style>
+@font-face{
+  font-family:'Barlow Condensed';
+  font-style:normal;
+  font-weight:700;
+  font-display:swap;
+  src:url('/assets/fonts/barlow-condensed-700.woff2') format('woff2');
+}
+
+:root{
+  --bg:#0c0b0a;
+  --ink:#f2ece4;
+  --muted:#9b938a;
+  --line:rgba(220,210,200,.10);
+  --ember:#ff6a1a;
+  --display:'Barlow Condensed','Arial Narrow',system-ui,sans-serif;
+  --body:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.55;
+}
+
+.wrap{
+  width:100%;
+  max-width:680px;
+  margin-inline:auto;
+  padding:0 20px;
+}
+
+main{flex:1 0 auto;padding-block:56px}
+
+img{display:block;height:72px;width:auto}
+
+.kicker{
+  display:block;
+  margin-top:26px;
+  font-size:15px;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+h1{
+  font-family:var(--display);
+  font-weight:700;
+  font-size:clamp(30px,7vw,38px);
+  line-height:1.05;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  margin:6px 0 28px;
+}
+
+a.product{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  min-height:64px;
+  padding:18px 20px;
+  border:1px solid var(--line);
+  border-radius:6px;
+  color:var(--ink);
+  font-size:18px;
+  font-weight:600;
+  text-decoration:none;
+  transition:border-color .15s ease;
+}
+
+a.product:hover,a.product:focus-visible{border-color:var(--ember)}
+
+a.product span{color:var(--ember);font-size:20px}
+
+a:focus-visible{outline:2px solid var(--ember);outline-offset:3px}
+
+footer{
+  flex:0 0 auto;
+  border-top:1px solid var(--line);
+  padding-block:20px 36px;
+  color:var(--muted);
+  font-size:15px;
+  line-height:1.7;
+}
+
+.foot-links{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.foot-links a{
+  display:inline-flex;
+  align-items:center;
+  min-height:48px;
+  color:var(--muted);
+  text-underline-offset:3px;
+}
+
+.foot-links a:hover,.foot-links a:focus-visible{color:var(--ink)}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition:none !important;animation:none !important}
+}
+</style>
+</head>
+
+<body>
+
+<main>
+  <div class="wrap">
+    <a href="https://milasados.com"><img src="/assets/img/milasados-logo-blanco.png" width="167" height="192" alt="MIL ASADOS"></a>
+    <span class="kicker">Modo de uso</span>
+    <h1>Elegí tu producto</h1>
+    <a class="product" href="/iniciador-premium/">Iniciador de Fuego MIL ASADOS <span>→</span></a>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    MIL ASADOS · Inventado en Argentina
+    <div class="foot-links">
+      <a href="https://milasados.com/seguridad/">Uso seguro</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://milasados.com">milasados.com</a>
+    </div>
+    EXPANDO SRL · © 2026
+  </div>
+</footer>
+
+</body>
+</html>

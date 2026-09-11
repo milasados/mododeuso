@@ -1,0 +1,3 @@
+El video actual es mudo, así que no lleva subtítulos.
+Si algún día el video tiene voz en off, el archivo .vtt va acá y hay que
+descomentar la línea <track> en iniciador-premium/index.html.

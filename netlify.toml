@@ -1,0 +1,51 @@
+[build]
+  publish = "."
+
+# --- Redirects: seguros contra un QR mal escrito o un link sin barra final ---
+
+[[redirects]]
+  from = "/iniciador"
+  to = "/iniciador-premium/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/iniciador-premium"
+  to = "/iniciador-premium/"
+  status = 301
+  force = true
+
+# --- Cabeceras de seguridad para todo el sitio ---
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
+
+# --- Cache ---
+# Los assets llevan version en el nombre (…-v1.mp4), asi que se cachean para siempre.
+# Al subir un -v2 el navegador lo pide como archivo nuevo y no sirve el viejo.
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# El HTML nunca se cachea: un cambio de texto tiene que verse al instante.
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/iniciador-premium/"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
