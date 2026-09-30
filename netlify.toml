@@ -1,19 +1,20 @@
 [build]
   publish = "."
 
-# --- Redirects: seguros contra un QR mal escrito o un link sin barra final ---
+# --- Redirects: seguro contra un QR mal escrito ---
+#
+# ⚠️ NO agregar una regla de /iniciador-premium a /iniciador-premium/.
+# Netlify ya normaliza la barra final por su cuenta, y ademas matchea las dos
+# formas como la misma ruta: con force = true la regla se redirige a si misma
+# y deja la URL del QR en un loop infinito (ERR_TOO_MANY_REDIRECTS).
+#
+# Tampoco usar force = true aca: en /iniciador no hay ningun archivo, asi que
+# la regla se aplica igual, y sin force no puede pisar una pagina real.
 
 [[redirects]]
   from = "/iniciador"
   to = "/iniciador-premium/"
   status = 301
-  force = true
-
-[[redirects]]
-  from = "/iniciador-premium"
-  to = "/iniciador-premium/"
-  status = 301
-  force = true
 
 # --- Cabeceras de seguridad para todo el sitio ---
 
