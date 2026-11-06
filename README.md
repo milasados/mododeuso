@@ -2,10 +2,16 @@
 
 Sitio auxiliar de MIL ASADOS. Es el destino del **código QR impreso en el packaging**.
 
-La página que importa es **`/iniciador-premium/`**: video tutorial y pasos escritos del
-Iniciador de Fuego. No vende nada. No tiene JavaScript, ni frameworks, ni dependencias
-externas. Son archivos HTML sueltos, y esa es la idea: el QR ya está impreso en cajas que
-no se pueden recuperar, así que esta página tiene que ser imposible de romper.
+Hay dos páginas, una por QR:
+
+- **`/iniciador-premium/`**: video tutorial y pasos escritos del Iniciador de Fuego.
+- **`/set-parrillero-premium/`**: el Set Parrillero (iniciador, pala, atizador y soporte).
+  Trae su propio video y, además, **repite completo** el tutorial y la seguridad del
+  iniciador, porque quien compró el set puede no entrar nunca a la otra página.
+
+Ninguna vende nada. No tienen JavaScript, ni frameworks, ni dependencias externas. Son
+archivos HTML sueltos, y esa es la idea: los QR ya están impresos en cajas que no se pueden
+recuperar, así que estas páginas tienen que ser imposibles de romper.
 
 ---
 
@@ -27,6 +33,33 @@ Recargar solo cuando el cuerpo metálico agujereado —no el mango— pueda toca
 **Si cambiás una de estas frases, hay que cambiarla en los cuatro lugares.** Incluido el
 `NUNCA` en mayúsculas. Una etiqueta que dice una cosa y una página que dice otra es un
 problema legal, no un detalle de redacción.
+
+---
+
+## ⚠️ El bloque de seguridad está en dos páginas, y Netlify controla que sea el mismo
+
+El bloque "Antes de usar" y los 6 pasos del encendido aparecen en `/iniciador-premium/`
+**y** en `/set-parrillero-premium/`. En los dos archivos, el bloque de seguridad está entre
+estos comentarios:
+
+```html
+<!-- INICIO BLOQUE-SEGURIDAD-CANONICO v1 — idéntico en iniciador-premium y set-parrillero-premium. Si cambia uno, cambian los dos. -->
+<!-- FIN BLOQUE-SEGURIDAD-CANONICO v1 -->
+```
+
+En cada deploy, Netlify corre `scripts/check-seguridad.sh`. El script compara el bloque y
+los pasos (`<ol class="steps">`) entre las dos páginas. **Si no son idénticos, el deploy
+falla y no se publica nada**: queda online la versión anterior. El log de Netlify muestra
+exactamente qué línea difiere.
+
+Si cambiás un texto de seguridad o un paso, cambialo en las dos páginas. Para probarlo
+antes de hacer push:
+
+```bash
+bash scripts/check-seguridad.sh
+```
+
+No borres ni edites los comentarios marcadores: sin ellos el script también falla.
 
 ---
 
@@ -53,6 +86,10 @@ El archivo lleva `v1` en el nombre a propósito. Al subir un video nuevo se le p
 viejo durante días por el caché.
 
 **Nunca reemplaces el archivo dejándole el mismo nombre.**
+
+> **El video del iniciador lo usan las dos páginas.** `/set-parrillero-premium/` apunta al
+> mismo archivo `tutorial-iniciador-premium-v1.mp4`, no a una copia. Cuando subas un `-v2`,
+> cambiá las rutas **en los dos HTML**.
 
 ### Paso 1 — Comprimir el video nuevo
 
@@ -111,6 +148,24 @@ actual, no toques nada de eso.
 
 Guardá, `git push`, y listo.
 
+### El video del Set Parrillero
+
+Es `assets/video/tutorial-set-parrillero-v1.mp4`, en `set-parrillero-premium/index.html`
+(buscá el comentario `VIDEO 1 — EL SET PARRILLERO`). Se reemplaza igual que el otro, con
+dos diferencias:
+
+- **Tiene voz**, así que el comando **no** lleva `-an`:
+
+```bash
+ffmpeg -i mi-video-del-set.mov -c:v libx264 -profile:v main -level 4.0 -crf 24 -preset slow -pix_fmt yuv420p -c:a aac -b:a 96k -movflags +faststart assets/video/tutorial-set-parrillero-v2.mp4
+```
+
+- Los subtítulos vienen grabados en la imagen, por eso no hay `<track>`. Si el próximo
+  video no los trae, agregá un `.vtt` en `assets/captions/` y un `<track>` como el que está
+  comentado en la página del iniciador.
+
+Si cambian las medidas del video, actualizá `width` y `height` en el `<video>`.
+
 ---
 
 ## Cómo cambiar un texto
@@ -145,7 +200,11 @@ encendido. No reordenes los pasos ni los "mejores": ese orden coincide con
 ```
 index.html                   Portada mínima del dominio (noindex). Lista de productos.
 iniciador-premium/
-  index.html                 LA página. Todo el CSS va adentro del archivo, a propósito.
+  index.html                 Página del iniciador. Todo el CSS va adentro, a propósito.
+set-parrillero-premium/
+  index.html                 Página del set. Mismo CSS que la del iniciador.
+scripts/
+  check-seguridad.sh         Control de Netlify: el bloque de seguridad igual en las dos.
 assets/
   video/                     Video tutorial + poster. Versionados (-v1, -v2...).
   img/                       Logo, favicons e imagen de preview para WhatsApp.
@@ -174,6 +233,7 @@ robots.txt / sitemap.xml     Para Google.
 ## Antes de imprimir un QR nuevo
 
 1. Que `mododeuso.com` resuelva y tenga HTTPS.
-2. Probar `https://mododeuso.com/iniciador-premium/` **desde un celular con datos móviles,
-   no con WiFi**.
+2. Probar `https://mododeuso.com/iniciador-premium/` y
+   `https://mododeuso.com/set-parrillero-premium` (sin barra, como está en la caja)
+   **desde un celular con datos móviles, no con WiFi**.
 3. Escanear el QR ya impreso y confirmar que cae donde tiene que caer.
