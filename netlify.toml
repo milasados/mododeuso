@@ -1,5 +1,8 @@
 [build]
   publish = "."
+  # No compila nada: compara el bloque de seguridad y los pasos del encendido entre
+  # /iniciador-premium/ y /set-parrillero-premium/. Si difieren, el deploy falla.
+  command = "bash scripts/check-seguridad.sh"
 
 # --- Redirects: seguro contra un QR mal escrito ---
 #
@@ -14,6 +17,25 @@
 [[redirects]]
   from = "/iniciador"
   to = "/iniciador-premium/"
+  status = 301
+
+# Set Parrillero. Igual que arriba: NO agregar /set-parrillero-premium ->
+# /set-parrillero-premium/ (es la URL del QR y entraria en el mismo loop).
+# Netlify ya sirve la pagina con y sin barra final.
+
+[[redirects]]
+  from = "/set"
+  to = "/set-parrillero-premium/"
+  status = 301
+
+[[redirects]]
+  from = "/set-parrillero"
+  to = "/set-parrillero-premium/"
+  status = 301
+
+[[redirects]]
+  from = "/setparrillero"
+  to = "/set-parrillero-premium/"
   status = 301
 
 # --- Cabeceras de seguridad para todo el sitio ---
@@ -48,5 +70,10 @@
 
 [[headers]]
   for = "/iniciador-premium/"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/set-parrillero-premium/"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
